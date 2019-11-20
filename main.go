@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"os"
 	"sort"
 	"strconv"
 )
@@ -11,9 +12,14 @@ import (
 func main() {
 	var notations = map[int]string{1000: "M", 500: "D", 100: "C", 50: "L", 10: "X", 5: "V", 1: "I",}
 
-	r := Calc(98, GetKeys(notations))
+	n, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+
+	r := Calc(n, GetKeys(notations))
 	s := Convert(r, notations)
-	fmt.Println(s)
+	fmt.Printf("%d => %s\n", n, s)
 }
 
 func GetKeys(m map[int]string) []int {
@@ -44,6 +50,10 @@ func NLength(n int) int {
 }
 
 func Calc(n int, arr []int) []int {
+	if n <= 0 {
+		return nil
+	}
+
 	nn := n
 	var result []int
 
